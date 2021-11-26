@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
-require('mongoose-type-email');
+import 'mongoose-schema-types';
+import 'mongoose-type-email';
 mongoose.SchemaTypes.Email.defaults.message = 'Email address is invalid!';
 
 const Users = new mongoose.Schema({
