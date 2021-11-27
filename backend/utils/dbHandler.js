@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-var db;
-
 const mongoUtil = {
   connect: (callback) => {
     mongoose.connect(
