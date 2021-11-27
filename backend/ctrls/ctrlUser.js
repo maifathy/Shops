@@ -1,10 +1,8 @@
 import Users from './../models/User.js';
-import mongoUtil from './../utils/dbHandler.js';
-import mongoose from 'mongoose';
 
 const ctrlUser = {
   getUser: async (req, res, next) => {
-    const response = await mongoose.model('User', Users).findById(req.params.id)
+    const response = await Users.findById(req.params.id)
       .exec((err, User) => {
         if (err) {
           console.log('err: ', err);
