@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
+// import uniqueValidator from 'mongoose-unique-validator';
 import 'mongoose-schema-types';
 import 'mongoose-type-email';
 mongoose.SchemaTypes.Email.defaults.message = 'Email address is invalid!';
@@ -32,5 +32,4 @@ const Users = new mongoose.Schema({
   }
 });
 
-Users.plugin(uniqueValidator);
 export default mongoose.model('Users', Users, 'Users');
