@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
+// import uniqueValidator from 'mongoose-unique-validator';
 
 const Shops = new mongoose.Schema({
   Name: {
@@ -13,5 +13,5 @@ const Shops = new mongoose.Schema({
   }]
 });
 
-Shops.plugin(uniqueValidator);
+// Shops.plugin(uniqueValidator);
 export default mongoose.model('Shops', Shops, 'Shops');
