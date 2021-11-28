@@ -16,6 +16,11 @@ export default (router) => {
     .route('/Shops')
     .get(ctrl.getShops);
 
+  /** get near Shops */
+  router
+    .route('/Shops/Near/')
+    .get(ctrl.getNearShops);
+
   /** get a Shop with Shops */
   router
     .route('/shops/like')
