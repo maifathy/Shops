@@ -19,8 +19,8 @@ mongoUtil.connect(() => {
   routeUser(router);
   routeShop(router);
   // insert default data
-  insertRow(1, 'Shop 1', 'Shop');
-  insertRow(2, 'Shop 2', 'Shop');
-  insertRow(3, 'Shop 4', 'Shop');
-  insertRow(1, 'newAdmin', 'User');
+  insertRow(1, 'Toddlers', 'Shop', 31.218526816898795, 29.96310721308271);
+  insertRow(2, 'Grocer', 'Shop', 31.21126696951743, 29.95981149845516);
+  insertRow(3, 'Al-Fahd', 'Shop', 31.21978070040207, 29.95981149373145);
+  insertRow(1, 'Mai', 'User', 31.207708408647015, 29.968096121791707);
 });
