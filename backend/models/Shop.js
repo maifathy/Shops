@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Point from './geoPoint.js';
 // import uniqueValidator from 'mongoose-unique-validator';
 
 const Shops = new mongoose.Schema({
@@ -7,6 +8,10 @@ const Shops = new mongoose.Schema({
     required: [true, 'Name is required'],
     unique: true
   },
+  Location: {
+    type: Point,
+    required: true
+  },
   LikedByUsers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
@@ -14,4 +19,8 @@ const Shops = new mongoose.Schema({
 });
 
 // Shops.plugin(uniqueValidator);
+Shops.index({ Location: '2dsphere' });
+Shops.on('index', (err) => {
+  if (err) console.log(err);
+});
 export default mongoose.model('Shops', Shops, 'Shops');
