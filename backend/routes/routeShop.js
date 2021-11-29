@@ -9,7 +9,7 @@ export default (router) => {
   /** delete a Shop */
   router
     .route('/Shop/Remove')
-    .post(ctrl.deleteShop);
+    .delete(ctrl.deleteShop);
 
   /** get a Shop */
   router
@@ -23,11 +23,11 @@ export default (router) => {
 
   /** get near Shops */
   router
-    .route('/Shops/Near/:id')
+    .route('/Shops/Near/:id/:page')
     .get(ctrl.getNearShops);
 
   /** get a Shop with Shops */
   router
-    .route('/shops/like')
+    .route('/Shops/Like/:id/:page')
     .get(ctrl.getLikedShops);
 };
