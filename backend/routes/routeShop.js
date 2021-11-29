@@ -30,4 +30,14 @@ export default (router) => {
   router
     .route('/Shops/Like/:id/:page')
     .get(ctrl.getLikedShops);
+
+  /** dislike a shop */
+  router
+    .route('/Shop/Dislike/:id')
+    .get(ctrl.dislikeShop);
+
+  /** like a shop */
+  router
+    .route('/Shop/Like/:id')
+    .get(ctrl.likeShop);
 };
