@@ -1,21 +1,19 @@
 import Shops from './../models/Shop.js';
+import mongoose from 'mongoose';
 
 const ctrlShop = {
   getShop: async (req, res, next) => {
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      console.log('[GET SHOP]: Invalid id');
       res.sendStatus(400);
       return;
     }
     await Shops.findById(req.params.id)
       .exec((err, Shop) => {
         if (err) {
-          console.log('err: ', err);
           res.send(err.message);
         } else if (!Shop) {
           res.sendStatus(404);
         } else {
-          console.log('Shop: ', Shop);
           res.send(Shop);
         }
         next();
@@ -98,6 +96,48 @@ const ctrlShop = {
       else res.sendStatus(204);
       next();
     });
+  },
+  dislikeShop: async (req, res, next) => {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      res.sendStatus(400);
+      return;
+    }
+    Shops.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.params.id) },
+      { $pull: { LikedByUsers: req.query.user_id } },
+      { returnOriginal: false },
+      (err, Shop) => {
+        if (err) {
+          res.send(err.message);
+        } else if (!Shop) {
+          res.sendStatus(404);
+        } else {
+          res.send(Shop);
+        }
+        next();
+      }
+    );
+  },
+  likeShop: async (req, res, next) => {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      res.sendStatus(400);
+      return;
+    }
+    Shops.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.params.id) },
+      { $push: { LikedByUsers: req.query.user_id } },
+      { returnOriginal: false },
+      (err, Shop) => {
+        if (err) {
+          res.send(err.message);
+        } else if (!Shop) {
+          res.sendStatus(404);
+        } else {
+          res.send(Shop);
+        }
+        next();
+      }
+    );
   }
 };
 
