@@ -34,6 +34,29 @@ const ctrlShop = {
         next();
       });
   },
+  getNearShops: async (req, res, next) => {
+    console.log('req.query: ', req.query.lon);
+    const coords = {
+      type: 'Point',
+      coordinates:
+        [req.query.lon, req.query.lat]
+    };
+    const id = req.params.id;
+    await Shops.find({ LikedByUsers: id })
+      .where('Location')
+      .near({ center: coords, maxDistance: 5000 })
+      .exec((err, Shop) => {
+        if (err) {
+          res.send(err.message);
+        } else if (!Shop) {
+          res.sendStatus(404);
+        } else {
+          console.log('Shops: ', Shop);
+          res.send(Shop);
+        }
+        next();
+      });
+  },
   getLikedShops: async (req, res, next) => {
     await Shops.find({ LikedByUsers: { $exists: true, $not: { $size: 0 } } })
       .exec((err, Shop) => {
@@ -56,6 +79,13 @@ const ctrlShop = {
       } else {
         res.send(newShop);
       }
+      next();
+    });
+  },
+  deleteShop: async (req, res, next) => {
+    await Shops.findByIdAndRemove(req.params.id, (err) => {
+      if (err) res.send(err);
+      else res.sendStatus(204);
       next();
     });
   }
