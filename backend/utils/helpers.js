@@ -7,13 +7,14 @@ export const insertRow = async (id, name, collection, lon, lat) => {
   let insertRes;
   if (collection === 'Shop') {
     loc.coordinates = [lon, lat];
-    insertRes = await new Shops(
+    insertRes = new Shops(
       {
         Name: name,
         Location: loc
       }
-    )
-      .save((err) => { if (err) { console.log('error adding shop: ', err.message); } });
+    );
+    // insertRes.LikedByUsers.push('61a39ce307772a185e4a2024');
+    await insertRes.save((err) => { if (err) { console.log('error adding shop: ', err.message); } });
   } else {
     insertRes = await new Users(
       {
