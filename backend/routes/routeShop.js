@@ -6,6 +6,11 @@ export default (router) => {
     .route('/Shop')
     .post(ctrl.addShop);
 
+  /** delete a Shop */
+  router
+    .route('/Shop/Remove')
+    .post(ctrl.deleteShop);
+
   /** get a Shop */
   router
     .route('/Shop/:id')
@@ -18,7 +23,7 @@ export default (router) => {
 
   /** get near Shops */
   router
-    .route('/Shops/Near/')
+    .route('/Shops/Near/:id')
     .get(ctrl.getNearShops);
 
   /** get a Shop with Shops */
