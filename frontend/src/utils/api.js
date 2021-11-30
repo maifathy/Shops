@@ -1,4 +1,4 @@
-import { getData, postData, putData, deleteData, api } from './helpers.js';
+import { getData, putData, deleteData, api } from './helpers.js';
 
 // shop requests
 export function getNearShops(userId, page){
@@ -13,7 +13,7 @@ export function getLikedShops(userId, page){
 
 export function likeShop(shopId, userId){
   return putData(`${api}/Shop/Like/${shopId}?user_id=${userId}`)
-    .then(shop => { shop });
+    .then(response => { return response });
 }
 
 export function dislikeShop(shopId, userId){
