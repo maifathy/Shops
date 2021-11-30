@@ -1,4 +1,6 @@
 import express from 'express';
+import cors from 'cors';
+
 import bodyParser from 'body-parser';
 import routeUser from './routes/routeUser.js';
 import routeShop from './routes/routeShop.js';
@@ -15,6 +17,12 @@ app.listen(port, () => {
 // Connect to the db
 mongoUtil.connect(() => {
   app.use(bodyParser.json());
+  app.use(cors());
+  /* app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000/');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  }); */
   app.use('/api/v1', router);
   routeUser(router);
   routeShop(router);
