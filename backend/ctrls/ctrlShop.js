@@ -112,7 +112,7 @@ const ctrlShop = {
         } else if (!Shop) {
           res.sendStatus(404);
         } else {
-          res.send(Shop);
+          res.sendStatus(200);
         }
         next();
       }
@@ -131,9 +131,10 @@ const ctrlShop = {
         if (err) {
           res.send(err.message);
         } else if (!Shop) {
+          console.log('error: No shop');
           res.sendStatus(404);
         } else {
-          res.send(Shop);
+          res.sendStatus(200);
         }
         next();
       }
