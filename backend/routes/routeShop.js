@@ -34,10 +34,10 @@ export default (router) => {
   /** dislike a shop */
   router
     .route('/Shop/Dislike/:id')
-    .get(ctrl.dislikeShop);
+    .put(ctrl.dislikeShop);
 
   /** like a shop */
   router
     .route('/Shop/Like/:id')
-    .get(ctrl.likeShop);
+    .put(ctrl.likeShop);
 };
