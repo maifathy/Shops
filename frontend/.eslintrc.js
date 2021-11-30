@@ -15,7 +15,10 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+      'jest',
+      'no-for-of-loops',
+      'react',
+      'react-internal',
     ],
     "rules": {
     }
