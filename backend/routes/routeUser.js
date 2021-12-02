@@ -8,8 +8,8 @@ export default (router) => {
 
   /** get a User */
   router
-    .route('/User/:id')
-    .get(ctrl.getUser);
+    .route('/User/')
+    .put(ctrl.getUser);
 
   /** get a User with Shops */
   router
