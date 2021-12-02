@@ -18,7 +18,6 @@ module.exports = {
       'jest',
       'no-for-of-loops',
       'react',
-      'react-internal',
     ],
     "rules": {
     }
