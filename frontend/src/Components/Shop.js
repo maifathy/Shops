@@ -51,5 +51,6 @@ export default class Shop extends React.Component{
 
 Shop.propTypes = {
   shop: PropTypes.object,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  isPreferedPage: PropTypes.bool
 };
