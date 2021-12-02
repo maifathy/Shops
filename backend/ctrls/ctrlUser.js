@@ -2,21 +2,13 @@ import Users from './../models/User.js';
 
 const ctrlUser = {
   getUser: async (req, res, next) => {
-    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      console.log('[GET USER]: Invalid id');
-      res.sendStatus(400);
-      return;
-    }
-    await Users.findById(req.params.id)
+    await Users.find({ Name: req.body.username, password: req.body.password })
       .exec((err, User) => {
         if (err) {
-          console.log('err: ', err);
           res.send(err.message);
         } else if (!User) {
-          console.log('not user');
           res.sendStatus(404);
         } else {
-          console.log('user: ', User);
           res.send(User);
         }
         next();
@@ -24,7 +16,6 @@ const ctrlUser = {
   },
   getUserLikedShops: async (req, res, next) => {
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      console.log('[GET USER]: Invalid id');
       res.sendStatus(400);
       return;
     }
