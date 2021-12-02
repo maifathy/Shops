@@ -25,3 +25,9 @@ export function deleteShop(shopId){
   return deleteData(`${api}/Shop/Remove/${shopId}`)
   .then(shopId);
 }
+
+// user requests
+export function login(username, password){
+  return putData(`${api}/getUser`, {username, password})
+    .then(user => ({ user }));
+}
