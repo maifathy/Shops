@@ -14,7 +14,7 @@ const ctrlShop = {
         } else if (!Shop) {
           res.sendStatus(404);
         } else {
-          res.send(Shop);
+          res.json(Shop);
         }
         next();
       });
@@ -27,7 +27,7 @@ const ctrlShop = {
         } else if (!Shop) {
           res.sendStatus(404);
         } else {
-          res.send(Shop);
+          res.json(Shop);
         }
         next();
       });
@@ -41,30 +41,23 @@ const ctrlShop = {
     const id = req.params.id;
     await Shops.find({ LikedByUsers: { $not: { $in: id } } })
       .where('Location')
-      .near({ center: coords, maxDistance: 5000 })
-      .skip(req.params.page * 12)
+      .near({ center: coords })
+      .skip((req.params.page - 1) * 12)
       .limit(12)
       .exec((err, Shop) => {
         if (err) {
           res.send(err.message);
         } else if (!Shop) {
-          res.sendStatus(404);
+          res.status(404).json({ status: 404, message: 'No Shops to show!!' });
         } else {
-          res.send(Shop);
+          res.json({ status: 200, message: 'Shops are successfully loaded', shops: Shop });
         }
         next();
       });
   },
   getLikedShops: async (req, res, next) => {
-    const coords = {
-      type: 'Point',
-      coordinates:
-        [req.query.lon, req.query.lat]
-    };
     const id = req.params.id;
     await Shops.find({ LikedByUsers: id })
-      .where('Location')
-      .near({ center: coords, maxDistance: 5000 })
       .skip(req.params.page * 12)
       .limit(12)
       .exec((err, Shop) => {
@@ -73,7 +66,7 @@ const ctrlShop = {
         } else if (!Shop) {
           res.sendStatus(404);
         } else {
-          res.send(Shop);
+          res.json(Shop);
         }
         next();
       });
@@ -85,7 +78,7 @@ const ctrlShop = {
       } else if (!newShop) {
         res.sendStatus(404);
       } else {
-        res.send(newShop);
+        res.json(newShop);
       }
       next();
     });

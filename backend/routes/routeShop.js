@@ -26,9 +26,9 @@ export default (router) => {
     .route('/Shops/Near/:id/:page')
     .get(ctrl.getNearShops);
 
-  /** get a Shop with Shops */
+  /** get a Prefered Shops */
   router
-    .route('/Shops/Like/:id/:page')
+    .route('/Shops/Prefered/:id/:page')
     .get(ctrl.getLikedShops);
 
   /** dislike a shop */

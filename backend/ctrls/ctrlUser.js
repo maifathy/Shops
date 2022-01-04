@@ -2,14 +2,17 @@ import Users from './../models/User.js';
 
 const ctrlUser = {
   getUser: async (req, res, next) => {
-    await Users.find({ Name: req.body.username, password: req.body.password })
+    await Users.findOne(
+      { Name: req.body.username, Password: req.body.password },
+      'Name Email _id Location'
+    )
       .exec((err, User) => {
         if (err) {
           res.send(err.message);
         } else if (!User) {
-          res.sendStatus(404);
+          res.status(404).json({ status: 404, message: 'Wrong username or password, please try again!!' });
         } else {
-          res.send(User);
+          res.json({ status: 200, message: 'User is successfully loaded', user: User });
         }
         next();
       });
