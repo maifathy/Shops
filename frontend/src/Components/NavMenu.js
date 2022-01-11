@@ -1,65 +1,61 @@
 import React, { useEffect, useCallback } from 'react';
 import { Nav } from 'react-bootstrap';
-import { Navigate, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-//import { withRouter } from 'react-router';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { removeAuthUser } from '../features/user/userSlice.js';
+import { useSelector, useDispatch } from 'react-redux';
 
 const NavMenu = () => {
-  const user = useSelector((state) => state.user.value);
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
-    if (user === null) {
-      return <Navigate to='/' />
+    if (Object.keys(user).length === 0) {
+      navigate('/login');
     }
   }, []);
 
   const changeActive = useCallback((e) => {
-    if(user === null)
+    if(Object.keys(user).length === 0)
       e.preventDefault();
   }, [user]);
 
   const logout = useCallback(() => {
-    this.props.removeAuthUser(null);
-    return <Navigate
-        to={{
-          pathname: '/login',
-          search: '',
-          state: { referrer: window.location.pathname }
-        }}
-    />
+    dispatch(removeAuthUser());
+    navigate('/login');
   }, []);
 
   return (
-
-    <div>
-      <Nav variant="tabs" defaultActiveKey="/">
-        <Nav.Item>
-            <NavLink to='/Shops' className='nav-link' onClick={(e) => changeActive(e)}>
-              Near Shops
-            </NavLink>
-        </Nav.Item>
-        <Nav.Item>
-            <NavLink to='/Shops/' className='nav-link' onClick={(e) => changeActive(e)}>
-              Prefered Shops
-            </NavLink>
-        </Nav.Item>
-        <span className='ml-5'></span>
-        <span className='ml-5'></span>
-        <span className='ml-5'></span>
-        { user !== null &&
-          <div>
-            <span>
-              Hello, { user.name }
-            </span>
-          </div>
+      <div>
+        { Object.keys(user).length > 0 &&
+          <Nav variant="tabs" defaultActiveKey="/">
+            <Nav.Item>
+                <NavLink to='/Shops/Near' className='nav-link' onClick={(e) => changeActive(e)}>
+                  Near Shops
+                </NavLink>
+            </Nav.Item>
+            <Nav.Item>
+                <NavLink to='/Shops/Prefered' className='nav-link' onClick={(e) => changeActive(e)}>
+                  Prefered Shops
+                </NavLink>
+            </Nav.Item>
+            <span className='ml-5'></span>
+            <span className='ml-5'></span>
+            <span className='ml-5'></span>
+            { Object.keys(user).length > 0 &&
+              <div>
+                <span>
+                  Hello, { user.Name }
+                </span>
+              </div>
+            }
+            { Object.keys(user).length > 0 &&
+                <span className='logout' onClick={() => logout()}>
+                  Logout
+                </span>
+            }
+          </Nav>
         }
-        { user !== null &&
-            <span className='logout' onClick={() => logout()}>
-              Logout
-            </span>
-        }
-      </Nav>
-      <br />
-    </div>
+      </div>
   )
 }
 

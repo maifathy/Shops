@@ -60,7 +60,7 @@ export const putData = async (url = '', data = {}) =>{
     });
 
     try {
-        const data = await response;
+        const data = await response.json();
         return data;
     } catch (e) {
         console.log(`PUT method error: ${e}`);

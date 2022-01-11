@@ -1,23 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  user: {},
-}
+  loading: 'pending',
+  user:  {}
+};
 
-export const userSlice = createSlice({
+export const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    userLoading: (state) => {
+      if (state.loading === 'idle' && Object.keys(state.user).length === 0) {
+        state.loading = 'pending';
+      }
+    },
     setAuthUser: (state, action) => {
+      if (state.loading === 'pending') {
+        state.loading = 'idle';
+      }
       state.user = action.payload;
     },
-    removeAuthUser: (state, action) => {
-      state.user = action.payload;
+    removeAuthUser: () => {
+      return initialState;
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setAuthUser, removeAuthUser } = userSlice.actions;
+export const { userLoading, setAuthUser, removeAuthUser } = user.actions;
 
-export default userSlice.reducer;
+export default user.reducer;
