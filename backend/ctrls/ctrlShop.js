@@ -58,15 +58,15 @@ const ctrlShop = {
   getLikedShops: async (req, res, next) => {
     const id = req.params.id;
     await Shops.find({ LikedByUsers: id })
-      .skip(req.params.page * 12)
+      .skip((req.params.page - 1) * 12)
       .limit(12)
       .exec((err, Shop) => {
         if (err) {
           res.send(err.message);
         } else if (!Shop) {
-          res.sendStatus(404);
+          res.status(404).json({ status: 404, message: 'No Shops to show!!' });
         } else {
-          res.json(Shop);
+          res.json({ status: 200, message: 'Shops are successfully loaded', shops: Shop });
         }
         next();
       });
@@ -103,9 +103,9 @@ const ctrlShop = {
         if (err) {
           res.send(err.message);
         } else if (!Shop) {
-          res.sendStatus(404);
+          res.status(404).json({ status: 404, message: 'An Error occurred, please try again!!' });
         } else {
-          res.sendStatus(200);
+          res.status(200).json({ status: 200, message: 'Shop is removed from Preferences successfully!', shop: Shop });
         }
         next();
       }
@@ -124,10 +124,9 @@ const ctrlShop = {
         if (err) {
           res.send(err.message);
         } else if (!Shop) {
-          console.log('error: No shop');
-          res.sendStatus(404);
+          res.status(404).json({ status: 404, message: 'An Error occurred, please try again!!' });
         } else {
-          res.sendStatus(200);
+          res.status(200).json({ status: 200, message: 'Shop is added to Preferences successfully!', shop: Shop });
         }
         next();
       }
